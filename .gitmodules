@@ -1,7 +1,7 @@
 [submodule "private_dot_config_/external_hypr_"]
-	path = private_dot_config_/external_hypr_
+	path = dot_config_/external_hypr_
 	url = git@github.com:SuchWowEl/arch-hyprland-config.git
 	branch = hyprpanel
 [submodule "private_dot_config_/external_nvim_"]
-	path = private_dot_config_/external_nvim_
+	path = dot_config_/external_nvim_
 	url = git@github.com:SuchWowEl/my_nvim.git
