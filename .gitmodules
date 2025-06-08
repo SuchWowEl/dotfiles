@@ -5,3 +5,6 @@
 [submodule "private_dot_config_/external_nvim_"]
 	path = dot_config/external_nvim
 	url = git@github.com:SuchWowEl/my_nvim.git
+[submodule "dot_config/external_tmux"]
+	path = dot_config/external_tmux
+	url = git@github.com:SuchWowEl/tmux-config.git
