@@ -5,3 +5,10 @@ cp conf:
 
 rr-mark:
   chezmoi add ~/.local/share/ranger/bookmarks
+
+mods-fetch:
+  git modsmodule update --remote
+
+mods-pull:
+  just mods-fetch
+  chezmoi apply

@@ -13,6 +13,19 @@ Clone this using:
 chezmoi init --apply git@github.com:SuchWowEl/dotfiles.git
 ```
 
+optionally to pull the latest commits for the submodules,
+
+```bash
+chezmoi cd
+git submodule update --remote
+chezmoi apply
+```
+
+or simply,
+
+```bash
+just mods-pull
+```
 
 ## Todo
 
