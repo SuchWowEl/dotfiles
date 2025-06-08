@@ -1,0 +1,231 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+# Path to your Oh My Zsh installation.
+ZSH=/usr/share/oh-my-zsh/
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="flazz"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change how often to auto-update (in days).
+# zstyle ':omz:update' frequency 13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git asdf)
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='nvim'
+# fi
+export EDITOR='nvim'
+# export VISUAL='nvim'
+
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# alias srestic="sudo restic -r /restic"
+# alias srestic-backup="sudo restic -r /restic backup / --exclude-file /etc/restic/excludes.txt"
+# # alias set_battery="~/.config/hypr/scripts/conservation_mode.sh"
+# # alias check_battery="sudo tlp-stat -b | grep -Eo 'conservation_mode.*'"
+# alias pathura="zathuraconf ~/.config/zathura/metropolis.json -p"
+# # alias fdf="cd "$(fzf | grep -o '.*/')""
+# alias fdf='cd "$(fzf | grep -o ".*/")"'
+# alias zathurad="zathura -c ~/.config/zathura/dark"
+# alias zathural="zathura -c ~/.config/zathura/light"
+
+ty() {
+  # List all snapshot names
+  snapshots=$(sudo timeshift --list | awk '/^---/{found=1;next} found && NF{print $3}')
+  # echo $snapshots
+  snapshot_count=$(echo "$snapshots" | grep -c .)
+  echo $snapshot_count
+  if [ "$snapshot_count" -ge 2 ]; then
+      oldest_snapshot=$(printf "%s\n" "${snapshots[@]}" | head -n 1)
+      echo "Removing oldest snapshot: $oldest_snapshot"
+      sudo timeshift --delete --snapshot "$oldest_snapshot"
+  else
+      echo "Not enough snapshots to remove. Current count: $snapshot_count"
+  fi
+  echo "Creating new snapshot..."
+  sudo timeshift --create
+  yay
+}
+
+sb() {
+  echo "Executing conservation script..."
+  #sudo nano /etc/tlp.conf
+  file="/etc/tlp.conf"
+
+  # Check if the file exists
+  if [ ! -e "$file" ]; then
+      echo "Error: File '$file' not found."
+      exit 1
+  else
+      echo "filename: $file"
+  fi
+
+  current_value=$(grep -Po 'STOP_CHARGE_THRESH_BAT0=\K[^"]*' "$file")
+  new_value="idk"
+
+
+  if [ "$current_value" = "0" ]; then
+      new_value="1"
+  else
+      new_value="0"
+  fi
+
+  echo "new value is $new_value"
+
+  sudo sed -i "s/STOP_CHARGE_THRESH_BAT0=$current_value/STOP_CHARGE_THRESH_BAT0=$new_value/" "$file"
+
+  sudo tlp start
+  sudo tlp-stat -b
+}
+
+alias cb="sudo tlp-stat -b | grep -Eo 'conservation_mode.*'"
+alias rr=". ranger"
+alias ts="sudo timeshift --list"
+
+alias pathura="zathuraconf ~/.config/zathura/metropolis.json -p"
+alias fdf='cd "$(fzf | grep -o ".*/")"'
+alias zathurad="zathura -c ~/.config/zathura/dark"
+alias zathural="zathura -c ~/.config/zathura/light"
+alias cz="chezmoi"
+alias czd="cd ~/.local/share/chezmoi"
+alias czs="chezmoi git status"
+alias lg="lazygit"
+
+czcp() {
+  local conf="${1:-nvim}"
+  if [[ ! " hypr nvim tmux " =~ " $conf " ]]; then
+    echo "Error: config file must be one of 'hypr', 'nvim', or 'tmux'."
+    return 1
+  fi
+
+  rsync -av --exclude '.git' "$HOME/.config/${conf}/" "$HOME/temp/external_${conf}/"
+  # rsync -av --exclude '.git' "$HOME/.config/${conf}/" "$HOME/.local/share/chezmoi/dot_config/external_${conf}/"
+}
+
+ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
+if [[ ! -d $ZSH_CACHE_DIR ]]; then
+  mkdir $ZSH_CACHE_DIR
+fi
+
+# for go installs
+export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
+# for npm/npx installs
+export PATH="$PATH:$HOME/.local/bin"
+export npm_config_prefix="$HOME/.local"
+# for npm:capacitor
+export CAPACITOR_ANDROID_STUDIO_PATH="/usr/bin/android-studio"
+
+# for haskell installs
+export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
+# for Android studio
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# for asdf
+# export ASDF_DATA_DIR="/your/custom/data/dir"
+export PATH="$PATH:${ASDF_DATA_DIR:-$HOME/.asdf}/shims"
+# export PATH="$HOME/flutter/bin:$PATH"
+
+export CHROME_EXECUTABLE="google-chrome-stable"
+export JAVA_HOME="/usr/lib/jvm/default-runtime/"
+
+# NOTE: For Docker Compose
+# export PATH="$PATH:/usr/lib/docker/cli-plugins"
+
+export FPATH=$FPATH:~/.local/zsh/
+
+# for homebrew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# NOTE: scripts from hypr
+source ~/.config/hypr/scripts/convenience.sh
+
+source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH/oh-my-zsh.sh
