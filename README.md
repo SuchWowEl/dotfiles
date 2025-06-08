@@ -6,6 +6,16 @@ reinstalled Linux in my machine, it's a real headache to pull configs manually
 [chezmoi](https://github.com/twpayne/chezmoi). This way, not only does it solve
 my dilemma, but also allows me to install my configs in other machines as well.
 
+## Usage
+
+Clone this using:
+
+```bash
+$ git clone git@github.com:SuchWowEl/dottest.git ~/.local/share/chezmoi
+$ cd ~/.local/share/chezmoi
+$ cz update
+```
+
 ## TODO
 
 - Add
