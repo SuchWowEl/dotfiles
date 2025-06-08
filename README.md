@@ -11,9 +11,7 @@ my dilemma, but also allows me to install my configs in other machines as well.
 Clone this using:
 
 ```bash
-$ git clone git@github.com:SuchWowEl/dottest.git ~/.local/share/chezmoi
-$ cd ~/.local/share/chezmoi
-$ cz update
+chezmoi init --apply git@github.com:SuchWowEl/dottest.git
 ```
 
 ## TODO
