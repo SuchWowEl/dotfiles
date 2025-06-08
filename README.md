@@ -10,7 +10,7 @@ This repo hosts my config files for several tools. It utilizes
 Clone this using:
 
 ```bash
-chezmoi init --apply git@github.com:SuchWowEl/dottest.git
+chezmoi init --apply git@github.com:SuchWowEl/dotfiles.git
 ```
 
 
