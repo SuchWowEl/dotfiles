@@ -5,14 +5,16 @@ This repo hosts my config files for several tools. It utilizes
 
 ## Usage
 
+> ℹ️ Will probably exclude the submodules so long as they're private
+
 Clone this using:
 
 ```bash
 chezmoi init --apply git@github.com:SuchWowEl/dottest.git
 ```
 
-## TODO
 
-- Add
-  - `.zshrc`
-  - `kitty`
+## Todo
+
+- check if pulling this into a new machine works automagically
+- slowly publicize submodules 👀
