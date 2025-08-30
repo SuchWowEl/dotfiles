@@ -1,2 +1,7 @@
 git:
   autoForwardBranches: none
+  localBranchSortOrder: recency
+  remoteBranchSortOrder: alphabetical
+
+gui:
+  useHunkModeInStagingView: false

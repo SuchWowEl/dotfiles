@@ -68,6 +68,12 @@
     "memory": {
         "format": "{}% "
     },
+    "upower": {
+        "icon-size": 20,
+        "hide-if-empty": true,
+        "tooltip": true,
+        "tooltip-spacing": 20
+    },
     "battery": {
         "bat": "BAT0",
         "states": {
