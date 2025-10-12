@@ -2,6 +2,7 @@
 
 This repo hosts my config files for several tools. It utilizes
 [chezmoi](https://github.com/twpayne/chezmoi), a dotfiles manager.
+Made with archlinux as target machine for installation in mind.
 
 ## Usage
 
@@ -12,22 +13,3 @@ Clone this using:
 ```bash
 chezmoi init --apply git@github.com:SuchWowEl/dotfiles.git
 ```
-
-optionally to pull the latest commits for the submodules,
-
-```bash
-chezmoi cd
-git submodule update --remote
-chezmoi apply
-```
-
-or simply,
-
-```bash
-just mods-pull
-```
-
-## Todo
-
-- check if pulling this into a new machine works automagically
-- slowly publicize submodules 👀
