@@ -1,3 +1,4 @@
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -63,14 +64,14 @@ ZSH_THEME="flazz"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=~/.local/zsh/
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf)
+plugins=(git asdf ollama)
 
 # User configuration
 
@@ -86,7 +87,7 @@ plugins=(git asdf)
 #   export EDITOR='nvim'
 # fi
 export EDITOR='nvim'
-# export VISUAL='nvim'
+export VISUAL='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -114,21 +115,24 @@ export EDITOR='nvim'
 # alias zathural="zathura -c ~/.config/zathura/light"
 
 ty() {
-  # List all snapshot names
-  snapshots=$(sudo timeshift --list | awk '/^---/{found=1;next} found && NF{print $3}')
-  # echo $snapshots
-  snapshot_count=$(echo "$snapshots" | grep -c .)
-  echo $snapshot_count
-  if [ "$snapshot_count" -ge 2 ]; then
-      oldest_snapshot=$(printf "%s\n" "${snapshots[@]}" | head -n 1)
-      echo "Removing oldest snapshot: $oldest_snapshot"
-      sudo timeshift --delete --snapshot "$oldest_snapshot"
-  else
-      echo "Not enough snapshots to remove. Current count: $snapshot_count"
-  fi
-  echo "Creating new snapshot..."
-  sudo timeshift --create
-  yay
+  # read -n 1 -p "To Update? [Y/n]" input
+  # if [[ "${input,,}" == "y" ]]; then
+    # List all snapshot names
+    snapshots=$(sudo timeshift --list | awk '/^---/{found=1;next} found && NF{print $3}')
+    # echo $snapshots
+    snapshot_count=$(echo "$snapshots" | grep -c .)
+    echo $snapshot_count
+    if [ "$snapshot_count" -ge 2 ]; then
+        oldest_snapshot=$(printf "%s\n" "${snapshots[@]}" | head -n 1)
+        echo "Removing oldest snapshot: $oldest_snapshot"
+        sudo timeshift --delete --snapshot "$oldest_snapshot"
+    else
+        echo "Not enough snapshots to remove. Current count: $snapshot_count"
+    fi
+    echo "Creating new snapshot..."
+    sudo timeshift --create
+    yay
+  # fi
 }
 
 sb() {
@@ -175,17 +179,6 @@ alias czd="cd ~/.local/share/chezmoi"
 alias czs="chezmoi git status"
 alias lg="lazygit"
 
-czcp() {
-  local conf="${1:-nvim}"
-  if [[ ! " hypr nvim tmux " =~ " $conf " ]]; then
-    echo "Error: config file must be one of 'hypr', 'nvim', or 'tmux'."
-    return 1
-  fi
-
-  rsync -av --exclude '.git' "$HOME/.config/${conf}/" "$HOME/temp/external_${conf}/"
-  # rsync -av --exclude '.git' "$HOME/.config/${conf}/" "$HOME/.local/share/chezmoi/dot_config/external_${conf}/"
-}
-
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
@@ -195,9 +188,12 @@ fi
 export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
 # for npm/npx installs
 export PATH="$PATH:$HOME/.local/bin"
-export npm_config_prefix="$HOME/.local"
+# export npm_config_prefix="$HOME/.local" # hidden, for nvm
 # for npm:capacitor
 export CAPACITOR_ANDROID_STUDIO_PATH="/usr/bin/android-studio"
+
+# for nvm
+source /usr/share/nvm/init-nvm.sh
 
 # for haskell installs
 export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
@@ -218,14 +214,12 @@ export JAVA_HOME="/usr/lib/jvm/default-runtime/"
 # export PATH="$PATH:/usr/lib/docker/cli-plugins"
 
 export FPATH=$FPATH:~/.local/zsh/
+# export NVIM_APPNAME="test_nvim"
 
 # for homebrew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# NOTE: scripts from hypr
-source ~/.config/hypr/scripts/convenience.sh
-
-source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 source $ZSH/oh-my-zsh.sh
