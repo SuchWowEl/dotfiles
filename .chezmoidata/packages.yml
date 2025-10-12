@@ -1,0 +1,27 @@
+packages:
+  arch:
+    - nvim
+    - vim
+    - lazygit
+    - lazydocker
+    - docker
+    - docker-compose
+    - docker-buildx
+    - chezmoi
+    - ranger
+    - zathura
+    - go
+    - npm
+    - nvm
+    - brew
+    - oh-my-zsh-git
+    - zsh
+    - zsh-autosuggestions
+    - zsh-completions
+    - zsh-doc
+    - zsh-lovers
+    - zsh-syntax-highlighting
+    - zsh-vi-mode-git
+    - typst
+    - ttf-ubuntu-nerd
+    - ttf-ubuntu-mono-nerd

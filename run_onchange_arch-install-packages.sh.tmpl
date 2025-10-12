@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.osRelease "arch" -}}
+#!/bin/bash
+
+yay -S --needed {{ range .packages.arch -}}{{ . | quote }} {{ end }}
+{{ end -}}
