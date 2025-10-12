@@ -1,0 +1,7 @@
+[package]
+name = "dark-theme"
+version = "1.0.0"
+compiler = "0.13.1"
+entrypoint = "default_settings.typ"
+categories = ["layout"]
+description = "Dark theme by yours truly"
