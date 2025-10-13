@@ -24,3 +24,12 @@ if ! command -v yay &>/dev/null; then
 else
     echo "✅ yay is already installed — skipping setup."
 fi
+
+# Install doppler-cli if not installed
+if ! command -v doppler &>/dev/null; then
+    echo "📦 Installing doppler-cli..."
+    yay -S --noconfirm doppler-cli
+    echo "✅ doppler-cli installed successfully!"
+else
+    echo "✅ doppler-cli is already installed — skipping."
+fi
