@@ -1,10 +1,26 @@
 #!/bin/bash
 
-cd ~ && mkdir yay_install && cd yay_install
-sudo pacman -S --needed git base-devel
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
+# Check if yay is already installed
+if ! command -v yay &>/dev/null; then
+    echo "🔧 yay not found — installing..."
 
-yay -Y --gendb
-yay -Y --devel --save
+    # Create temp build dir
+    cd ~ || exit
+    mkdir -p yay_install && cd yay_install || exit
+
+    # Install prerequisites
+    sudo pacman -S --needed --noconfirm git base-devel
+
+    # Clone and build yay
+    git clone https://aur.archlinux.org/yay.git
+    cd yay || exit
+    makepkg -si --noconfirm
+
+    # Configure yay
+    yay -Y --gendb
+    yay -Y --devel --save
+
+    echo "✅ yay installation complete!"
+else
+    echo "✅ yay is already installed — skipping setup."
+fi
