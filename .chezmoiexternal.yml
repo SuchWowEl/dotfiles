@@ -4,3 +4,6 @@
 "./.config/nvim":
   type: "git-repo"
   url: "git@github.com:SuchWowEl/nvim_conf.git"
+"./.config/tmux/plugins/tpm/":
+  type: "git-repo"
+  url: "https://github.com/tmux-plugins/tpm"
