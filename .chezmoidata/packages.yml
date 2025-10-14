@@ -25,3 +25,14 @@ packages:
     - typst
     - ttf-ubuntu-nerd
     - ttf-ubuntu-mono-nerd
+    - wl-clipboard
+    - xsel
+    - htop-vim
+    - fzf
+    - unzip
+    - 7zip
+    - rust
+    - python-pynvim
+    - ueberzug
+    - ripgrep
+    - fd
