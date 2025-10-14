@@ -1,0 +1,3 @@
+{{ if and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+export PATH=$(echo "$PATH" | tr ':' '\n' | awk '!seen[$0]++' | grep -v '^/mnt/c' | paste -sd:)
+{{ end }}
