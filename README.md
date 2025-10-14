@@ -2,11 +2,16 @@
 
 This repo hosts my config files for several tools. It utilizes
 [chezmoi](https://github.com/twpayne/chezmoi), a dotfiles manager.
-Made with archlinux as target machine for installation in mind.
+Made with arch as the target distro, and intended for my personal use.
 
 ## Usage
 
-> ℹ️ Will probably exclude the submodules so long as they're private
+### Pre-requisites
+
+- Install git
+- Doppler doesn't store any ssh key, so create one and register it to
+GitHub
+- On windows, install [`Wezterm`](https://wezterm.org/install/windows.html).
 
 Clone this using:
 
