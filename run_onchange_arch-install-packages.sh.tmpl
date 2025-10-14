@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.osRelease "arch" -}}
+{{ if eq .chezmoi.osRelease.id "arch" -}}
 #!/bin/bash
 
 yay -S --needed {{ range .packages.arch -}}{{ . | quote }} {{ end }}
