@@ -3,4 +3,4 @@
   url: "https://github.com/lennonwoo/zathura-solarized"
 "./.config/nvim":
   type: "git-repo"
-  url: "https://github.com/SuchWowEl/nvim_conf"
+  url: "git@github.com:SuchWowEl/nvim_conf.git"
