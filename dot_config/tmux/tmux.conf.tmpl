@@ -30,6 +30,12 @@ set -g pane-base-index 1
 set-window-option -g pane-base-index 1
 set-option -g renumber-windows on
 
+{{ if and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+set -g default-terminal "tmux-256color"
+set -as terminal-overrides ',xterm-256color:RGB'
+set -as terminal-overrides ',tmux-256color:RGB'
+{{ end }}
+
 set -s set-clipboard on
 set -s copy-command 'wl-copy -p'
 
