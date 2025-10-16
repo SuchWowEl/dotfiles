@@ -1,0 +1,19 @@
+Host github.com
+  AddKeysToAgent yes
+  IdentityFile
+  {{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) }} ~/.ssh/wsl_github
+  {{- else }} ~/.ssh/id_ed25519
+  {{- end }}
+Host bitbucket.org
+  AddKeysToAgent yes
+  # IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/work
+
+# GitLab.com
+Host gitlab.com
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/work
+# Private GitLab instance
+Host gitlab.company.com
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/work
