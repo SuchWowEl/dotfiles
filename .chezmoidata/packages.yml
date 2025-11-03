@@ -36,3 +36,4 @@ packages:
     - ueberzug
     - ripgrep
     - fd
+    - vicinae-bin
