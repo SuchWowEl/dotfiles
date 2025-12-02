@@ -2,6 +2,7 @@ packages:
   arch:
     - nvim
     - vim
+    - tmux
     - lazygit
     - lazydocker
     - docker
@@ -30,9 +31,9 @@ packages:
     - fzf
     - unzip
     - 7zip
-    - rust
+    - rustup
     - python-pynvim
-    - ueberzug
+    - ueberzugpp
     - ripgrep
     - fd
     - vicinae-bin
