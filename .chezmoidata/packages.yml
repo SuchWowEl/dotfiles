@@ -13,7 +13,6 @@ packages:
     - go
     - npm
     - nvm
-    - brew
     - oh-my-zsh-git
     - zsh
     - zsh-autosuggestions
