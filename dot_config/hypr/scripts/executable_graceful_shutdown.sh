@@ -6,7 +6,7 @@ if [[ "$1" == "poweroff" || "$1" == "reboot"  ]]; then
   action="$action $1"
   dunstify "Commencing $action..."
 elif [[ "$1" == "logout" ]]; then
-  action="hyprctl dispatch exit"
+  action="uwsm stop"
 else
   action=""
   dunstify "Error: no arguments were passed"
@@ -19,10 +19,10 @@ terminate_process() {
 
   pid=$(pidof "$process_name")
   if [[ -n "$pid" ]]; then
-    kill "$pid"
+    killall "$pid"
 
     # Wait for the process to terminate
-    while kill -0 "$pid" 2>/dev/null; do
+    while killall -0 "$pid" 2>/dev/null; do
       sleep 1
     done
     dunstify "Process $process_name terminated."
@@ -59,7 +59,7 @@ if [[ "$action" ]]; then
   # TODO: graceful shutdown for tmux
   tmux kill-server
   sleep 1
-  eval $action
+  eval "$action"
 fi
 
 # systemctl poweroff
